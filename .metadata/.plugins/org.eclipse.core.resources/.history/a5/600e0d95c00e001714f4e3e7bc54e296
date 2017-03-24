@@ -1,0 +1,100 @@
+package com.friendzone.DaoImpl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.friendzone.DaoServices.Userservices;
+import com.friendzone.Model.UserRegModel;
+
+@Repository
+@Transactional
+public class UserDaoImpl implements Userservices {
+
+	@Autowired
+	SessionFactory sessionFactory;
+	
+	//public static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
+
+	@Override
+	public boolean insertUser(UserRegModel userregistered) {
+		try {
+			//logger.debug("inside insert user method in UserDaoImpl");
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			s.save(userregistered);
+			t.commit();
+			return true;
+		} catch (HibernateException e) {
+
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public ArrayList<UserRegModel> viewUsers() {
+		//logger.debug("inside view users method in UserDaoImpl");
+		Session s = sessionFactory.openSession();
+		Transaction t = s.getTransaction();
+		t.begin();
+		ArrayList<UserRegModel> userslist = (ArrayList<UserRegModel>) s.createQuery("from UserRegModel").list();
+		t.commit();
+		s.close();
+		return userslist;
+	}
+
+	@Override
+	public UserRegModel viewOneUser(String userid,String Password) {
+		//logger.debug("inside viewoneuser method in UserDaoImpl");
+		Session s = sessionFactory.openSession();
+		Transaction t = s.getTransaction();
+		t.begin();
+		UserRegModel user = s.get(UserRegModel.class, userid);
+		t.commit();
+		s.close();
+		if(user.getPassword().equals(Password))
+		{
+			user.setStatus("online");
+			
+			return user;
+			
+		}
+		else
+		{
+			
+			return null;
+		}
+		
+		//System.out.println(user.getPassword());
+		
+	}
+
+	@Override
+	public boolean updateUser(UserRegModel u) {
+		try {
+			//logger.debug("start of update method in UserDaoImpl");
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			s.update(u);
+			t.commit();
+			s.close();
+			//logger.debug("end of update method in UserDaoImpl");
+			return true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			//logger.debug("start of update method in UserDaoImpl");
+			return false;
+		}
+	}
+
+}

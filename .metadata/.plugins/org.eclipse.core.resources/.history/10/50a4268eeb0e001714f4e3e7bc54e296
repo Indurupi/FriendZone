@@ -1,0 +1,17 @@
+package com.friendzone.Controller;
+
+@Controller
+@RequestMapping("/")
+public class ChatController {
+
+  @RequestMapping(method = RequestMethod.GET)
+  public String viewApplication() {
+    return "index";
+  }
+    
+  @MessageMapping("/chat")
+  @SendTo("/topic/message")
+  public OutputMessage sendMessage(Message message) {
+    return new OutputMessage(message, new Date());
+  }
+}

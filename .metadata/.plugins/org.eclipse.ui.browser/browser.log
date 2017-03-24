@@ -1,0 +1,41 @@
+
+Feb 23, 2017 17:04:43.83 NEW SESSION
+Feb 23, 2017 17:04:43.86 [GFX1-]: CreateShaderResourceView failed for format87
+Feb 23, 2017 17:05:00.62 console.warn: LoginHelper: dedupeLogins: Deduping with a scheme preference but couldn't get the preferred origin scheme.
+
+Feb 24, 2017 11:59:41.38 NEW SESSION
+Feb 24, 2017 11:59:41.38 [GFX1-]: CreateShaderResourceView failed for format87
+Feb 24, 2017 11:59:49.16 console.warn: LoginHelper: dedupeLogins: Deduping with a scheme preference but couldn't get the preferred origin scheme.
+Feb 24, 2017 12:13:56.27 [GFX1-]: CreateShaderResourceView failed for format87
+Feb 24, 2017 12:18:30.07 [GFX1-]: CreateShaderResourceView failed for format87
+Feb 24, 2017 12:21:11.61 [GFX1-]: CreateShaderResourceView failed for format87
+
+Feb 27, 2017 11:54:35.28 NEW SESSION
+Feb 27, 2017 11:54:35.28 [GFX1-]: CreateShaderResourceView failed for format87
+Feb 27, 2017 13:53:43.99 [GFX1-]: CreateShaderResourceView failed for format87
+Feb 27, 2017 15:16:01.91 [GFX1-]: CreateShaderResourceView failed for format87
+
+Feb 28, 2017 15:27:18.78 NEW SESSION
+Feb 28, 2017 15:27:18.78 [GFX1-]: CreateShaderResourceView failed for format87
+
+Mar 06, 2017 12:13:43.50 NEW SESSION
+Mar 06, 2017 12:13:43.50 [GFX1-]: CreateShaderResourceView failed for format87
+Mar 06, 2017 12:14:21.80 [GFX1-]: CreateShaderResourceView failed for format87
+Mar 06, 2017 12:15:46.42 [GFX1-]: CreateShaderResourceView failed for format87
+Mar 06, 2017 15:22:17.48 TabSources.prototype._fetchSourceMap threw an exception: SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data
+Mar 06, 2017 15:22:17.55 Stack: SourceMapConsumer@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/sourcemap/source-map.js:1281:20
+Mar 06, 2017 15:22:17.55 TabSources.prototype._fetchSourceMap/fetching<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/utils/TabSources.js:469:19
+Mar 06, 2017 15:22:17.55 Handler.prototype.process@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:937:23
+Mar 06, 2017 15:22:17.55 this.PromiseWalker.walkerLoop@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:816:7
+Mar 06, 2017 15:22:17.55 this.PromiseWalker.scheduleWalkerLoop/<@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:750:11
+Mar 06, 2017 15:22:17.55 Line: 1281, column: 20
+Mar 06, 2017 15:22:17.55 console.error: 
+Mar 06, 2017 15:22:17.55   TabSources.prototype._fetchSourceMap threw an exception: SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data
+Mar 06, 2017 15:22:17.55 Stack: SourceMapConsumer@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/sourcemap/source-map.js:1281:20
+Mar 06, 2017 15:22:17.55 TabSources.prototype._fetchSourceMap/fetching<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/utils/TabSources.js:469:19
+Mar 06, 2017 15:22:17.55 Handler.prototype.process@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:937:23
+Mar 06, 2017 15:22:17.55 this.PromiseWalker.walkerLoop@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:816:7
+Mar 06, 2017 15:22:17.55 this.PromiseWalker.scheduleWalkerLoop/<@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:750:11
+Mar 06, 2017 15:22:17.55 Line: 1281, column: 20
+Mar 06, 2017 16:27:15.56 [GFX1-]: CreateShaderResourceView failed for format87
+Mar 06, 2017 16:35:54.76 [GFX1-]: CreateShaderResourceView failed for format87

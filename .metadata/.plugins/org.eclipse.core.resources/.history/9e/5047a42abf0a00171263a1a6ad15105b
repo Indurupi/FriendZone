@@ -1,0 +1,86 @@
+console.log('inside forumservice js ');
+angular.module('friendzoneApp').factory('forumservice',['$http', '$q',function($http,$q)
+    {
+	var REST_SERVICE_URL='http://localhost:8080/FriendZone/';
+	console.log('inside forumservice js');
+	var factory = 
+	{
+			fetchAllForums: fetchAllForums,
+			createForum: createForum,
+			
+	};
+	return factory;
+
+    function fetchAllForums()
+    {
+    	console.log("inside fetch all forum in forum service");
+        var deferred = $q.defer();
+        $http.get(REST_SERVICE_URL+'/forumgetall')
+            .then(
+            function (response) 
+            {
+            	deferred.resolve(response.data); 
+            	console.log("list of forum"+response.data);
+            },
+            function(errResponse){
+                console.error('Error while fetching forum');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
+//    function loginUser(usercred) 
+//    {
+//    	console.log(usercred);
+//        var deferred = $q.defer();
+//        $http.post(REST_SERVICE_URI1, usercred)
+//            .then(
+//            function (response) 
+//            {
+//                deferred.resolve(response);
+//            },
+//            function(errResponse)
+//            {
+//                console.error('Error while creating User');
+//                deferred.reject(errResponse);
+//            }
+//        );
+//        return deferred.promise;
+//    }
+    function createForum(forum) 
+    {
+    	console.log('inside create forum method')
+		
+		console.log('in service json array'+JSON.stringify(forum, null, 2));
+    	
+        var deferred = $q.defer();
+        $http.post(REST_SERVICE_URL+'/foruminsert', forum)
+            .then(
+            function (response) 
+            {
+            	console.log("this is forum object from view"+forum);
+                deferred.resolve(response);
+            },
+            function(errResponse)
+            {
+              // console.error("Error while creating User"+errResponse);
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
+//    function updateUser(user, id) {
+//        var deferred = $q.defer();
+//        $http.put(REST_SERVICE_URI+id, user)
+//            .then(
+//            function (response) {
+//                deferred.resolve(response.data);
+//            },
+//            function(errResponse){
+//                console.error('Error while updating User');
+//                deferred.reject(errResponse);
+//            }
+//        );
+//        return deferred.promise;
+//    }
+ }]);

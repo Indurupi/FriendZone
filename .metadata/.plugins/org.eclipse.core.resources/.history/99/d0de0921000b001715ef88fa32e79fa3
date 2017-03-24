@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>FriendZone</title>
+</head>
+<body ng-app="friendzoneApp">
+	<div class="container" ng-controller="jobcontroller as jobc">
+
+		<div class="row">
+
+			<!-- Blog Post Content Column -->
+			<div class="col-lg-8">
+				<form ng-submit="jobc.submit()">
+
+					<h1>
+						<div class="form-group">
+							<label>Job Title</label> <input type="text" class="form-control"
+								placeholder="Job Title" ng-model="jobc.job.jobtitle">
+						</div>
+					</h1>
+					<div class="lead">
+						Salary Package
+						<div class="form-group">
+							<input type="text" class="form-control"
+								placeholder="Salary Package" ng-model="jobc.job.salarypackage">
+						</div>
+					</div>
+					
+					<div class="lead">
+						Company Name
+						<div class="form-group">
+							<input type="text" class="form-control"
+								placeholder="Company Name">
+						</div>
+					</div>
+					<div class="lead form-group">
+						Job Description
+						<textarea class="form-control" placeholder="Job Description" rows="5"></textarea>
+					</div>
+					<div class="lead">
+						Qualification
+						<div class="form-group">
+							<input type="text" class="form-control"
+								placeholder="Qualification">
+						</div>
+					</div>
+					<div class="lead">
+						Status
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Status">
+						</div>
+					</div>
+
+					<button class="btn" id="custom-button" type="submit">Create
+						Job</button>
+					<button class="btn" id="custom-button" ng-click="" type="reset">Reset</button>
+				</form>
+			</div>
+
+		</div>
+
+	</div>
+</body>
+</html>

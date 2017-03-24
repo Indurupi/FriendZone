@@ -1,0 +1,140 @@
+package com.friendzone.DaoImpl;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.friendzone.DaoServices.Blogservices;
+import com.friendzone.Model.BlogModel;
+
+@Repository
+@Transactional
+public class BlogDaoImpl implements Blogservices {
+
+	@Autowired
+	SessionFactory sessionFactory;
+	
+	//public static final Logger logger = LoggerFactory.getLogger(BlogDaoImpl.class);
+
+	@Override
+	public ArrayList<BlogModel> getAllBlogs() {
+		//logger.info("start of getallblogs method in BlogDaoImpl");
+		Session s = sessionFactory.openSession();
+		Transaction t = s.getTransaction();
+		t.begin();
+		ArrayList<BlogModel> blogs = (ArrayList<BlogModel>) s.createQuery("from BlogModel").list();
+		t.commit();
+		s.close();
+		//logger.info("end of getallblogs method in BlogDaoImpl");
+		return blogs;
+	}
+
+	@Override
+	public ArrayList<BlogModel> getAllBlogs(String userid) {
+		//logger.info("start of getallblogs method based on user id in BlogDaoImpl");
+		Session s = sessionFactory.openSession();
+		Transaction t = s.getTransaction();
+		t.begin();
+		//this fetches all blogs
+		//a condition must be written in order to match userid
+		ArrayList<BlogModel> blogs = (ArrayList<BlogModel>) s.createQuery("from BlogModel").list();
+		Iterator<BlogModel> blogmodelelement= blogs.listIterator();
+		ArrayList<BlogModel> userblogs = new ArrayList<BlogModel>();
+		while(blogmodelelement.hasNext())
+		{
+			
+			BlogModel blogitems = blogmodelelement.next();
+			if(blogitems.getUserId().equals(userid))
+			{
+				userblogs.add(blogitems);
+			}
+			else
+			{
+				break;
+			}
+		}
+		t.commit();
+		s.close();
+		//logger.info("end of getallblogs method based on user id in BlogDaoImpl");
+		return userblogs;
+	}
+
+	@Override
+	public BlogModel getBlog(int id) {
+		//logger.info("start of getblog method in BlogDaoImpl");
+
+		Session s = sessionFactory.openSession();
+		Transaction t = s.getTransaction();
+		t.begin();
+		BlogModel blog = s.get(BlogModel.class, id);
+		t.commit();
+		s.close();
+		//logger.info("End of getblog method in BlogDaoImpl");
+		return blog;
+	}
+
+	@Override
+	public boolean createBlog(BlogModel blog) {
+		try {
+			//logger.info("start of createBlog method in BlogDaoImpl");
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			s.save(blog);
+			t.commit();
+			s.close();
+			//logger.info("End of createBlog method in BlogDaoImpl");
+			return true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			//logger.info("End of createBlog method in BlogDaoImpl");
+			return false;
+		}
+	}
+
+	@Override
+	public boolean updateBlog(BlogModel blog) {
+
+		try {
+			//logger.info("start of updateblog method in BlogDaoImpl");
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			s.update(blog);
+			t.commit();
+			s.close();
+			//logger.info("end of update method in BlogDaoImpl");
+			return true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			//logger.info("start of getblog method in BlogDaoImpl");
+			return false;
+		}
+	}
+
+	@Override
+	public boolean deleteBlog(int blogid) {
+		try {
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			s.delete(blogid);
+			t.commit();
+			s.close();
+			return true;
+		} catch (HibernateException e) {
+
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	
+}

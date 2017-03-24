@@ -1,0 +1,40 @@
+package com.friendzone.Controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.friendzone.DaoServices.JobServices;
+import com.friendzone.Model.BlogModel;
+import com.friendzone.Model.JobModel;
+
+@RestController
+public class JobController {
+	
+	@Autowired
+	JobServices jobServices;
+	
+	@RequestMapping(value="/jobinsert")
+	public ResponseEntity<String> insertJob(@RequestBody JobModel jobModel)
+	{
+		if (jobServices.createJob(jobModel)) {
+			return new ResponseEntity<String>(HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+	
+	@RequestMapping(value = "/jobupdate", method = RequestMethod.POST)
+	public ResponseEntity<BlogModel> updateBlog(@RequestBody BlogModel blog) {
+		//logger.info("inside update blog method in blog controller");
+		if (blogservices.updateBlog(blog)) {
+			return new ResponseEntity<BlogModel>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<BlogModel>(HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+}

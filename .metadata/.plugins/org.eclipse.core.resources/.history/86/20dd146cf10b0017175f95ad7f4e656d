@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="ISO-8859-1">
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>FriendZone</title>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+<style type="text/css">
+body {
+	background: linear-gradient(to bottom, #e0f2f1 50%, #80cbc4 120%);
+	font-family: Verdana, san-serif;
+	font-style: italic;
+}
+</style>
+
+</head>
+
+<body ng-app="friendzoneApp">
+	<div ng-controller="blogcontrol as bc">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<form ng-submit="bc.submitblog()" method="post">
+
+						<!-- Blog Post -->
+
+						<!-- Title -->
+						<h1>
+							<div class="form-group">
+								<label>Blog Title</label> <input type="text"
+									class="form-control" placeholder="Blog Title"
+									ng-model="bc.blog.blogTitle">
+							</div>
+						</h1>
+
+						<!-- Author -->
+						<div class="form-group">
+							<p class="lead">
+								Posted by <input type="text" class="form-control"
+									placeholder="Posted User" ng-model="bc.blog.postedUser">
+							</p>
+						</div>
+
+
+						<hr>
+						<div class="form-group">
+							<p class="lead">Blog Description
+							<textarea class="form-control" rows="15"
+								ng-model="bc.blog.blogDescription"></textarea>
+							</p>
+						</div>
+						<hr>
+						<button class="btn" id="custom-button" type="submit">Create
+							Blog</button>
+						<button class="btn" id="custom-button" ng-click="bc.reset()"
+							type="reset">Reset</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- <div ng-repeat="blogobj in bc.blogs">
+			userid:{{blogobj.userId}}<br> posteddate:{{blogobj.postedDate}}<br>
+			blogid:{{blogobj.blogid}}<br> posteduser:{{blogobj.postedUser}}<br>
+			blogtitle:{{blogobj.blogTitle}}<br>
+			blogdescription:{{blogobj.blogDescription}}<br><br>
+			<br>
+		</div> -->
+	</div>
+</body>
+</html>

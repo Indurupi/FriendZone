@@ -1,0 +1,14 @@
+package com.friendzone.Model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class JobApplicationModel {
+	
+	@Id
+	int primarykey;
+	
+	
+
+}

@@ -1,0 +1,6 @@
+package com.friendzone.DaoServices;
+
+
+public interface JobServices {
+
+}

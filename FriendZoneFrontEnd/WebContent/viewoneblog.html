@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<style type="text/css">
+
+#holder {
+	display: inline-block;
+	border-radius: 5px;
+	background: linear-gradient(to bottom, #b2dfdb 60%, #00796b 130%);
+	box-shadow: 0px 0px 20px #b2dfdb;
+	margin: 10px 25px;
+	justify-content: center;
+	width: 95%;
+	padding: 20px;
+}
+
+/* #custom-button {
+	color: #ffffff;
+	width: 20%;
+	background-color: #009688;
+	font-family: Verdana, san-serif;
+	font-weight: bold;
+	font-style: italic;
+} */
+
+#top-block {
+	padding-top: 4px;
+}
+
+.form-control:focus {
+	border: 2px solid #009688;
+}
+
+#commentsblock {
+	width: 80%;
+}
+</style>
+</head>
+<body ng-app="friendzoneApp">
+	<div ng-controller="blogcontrol as blogc">
+		<div id="holder">
+			<div>
+				<!-- Blog Post Content Column -->
+
+				<div class="col-lg-8" id="blogblock">
+
+					<!-- Blog Post -->
+
+					<!-- Title -->
+					<h1>{{blogc.singleblog.blogTitle}}</h1>
+
+					<!-- Author -->
+					<p class="lead">by {{blogc.singleblog.postedUser}}</p>
+
+					<hr>
+
+					<!-- Date/Time -->
+					<p>
+						<span class="glyphicon glyphicon-time"></span> Posted on
+						{{blogc.singleblog.postedDate}}
+					</p>
+
+					<hr>
+
+					<!-- Preview Image -->
+					<!--  <img class="img-responsive" src="http://placehold.it/900x300" alt=""> -->
+
+					<!-- Post Content -->
+					<p>{{blogc.singleblog.blogDescription}}</p>
+
+					<!-- Posted Comments -->
+					<div class="well">
+						<h4>Leave a Comment:</h4>
+						<form ng-submit="blogc.submitcomment(blogc.singleblog.blogid)">
+							<div class="form-group">
+								<textarea class="form-control" rows="3" ng-model="blogc.comment.commentDescription" required="required"></textarea>
+							</div>
+							<button type="submit" id="custom-button" class="btn">Submit</button>
+						</form>
+					</div>
+
+					<hr>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+	<div id="holder" ng-controller="blogcontrol as blogc">
+		<!-- Comment -->
+		<div class="media" id="commentsblock" ng-repeat="commentobject in blogc.comments">
+
+			<a class="pull-left" href="#"> <img class="media-object"
+				src="http://placehold.it/64x64" alt="">
+			</a>
+			<div class="media-body">
+			{{commentobject.commentDescription}}
+				<div class="media-heading pull-right">
+
+					<small> Commented User  {{commentobject.postedUser}} on {{commentobject.postedDate}}</small>
+
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</body>
+</html>

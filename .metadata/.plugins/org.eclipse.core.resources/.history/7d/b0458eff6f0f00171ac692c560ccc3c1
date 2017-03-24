@@ -1,0 +1,17 @@
+package com.friendzone.DaoServices;
+
+import java.util.ArrayList;
+
+import org.springframework.stereotype.Service;
+
+import com.friendzone.Model.UserRegModel;
+
+@Service
+public interface Userservices {
+	
+	public boolean insertUser(UserRegModel u);
+	public boolean updateUser(UserRegModel u);
+	public ArrayList<UserRegModel> viewUsers();
+	public UserRegModel viewOneUser(String userid,String Password);
+
+}

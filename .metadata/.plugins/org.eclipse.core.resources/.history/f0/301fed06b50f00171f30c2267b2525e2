@@ -1,0 +1,68 @@
+package com.friendzone.Model;
+
+import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Friend {
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
+	@Column
+	private String userid;
+	@Column
+	private String username;
+	@Column
+	private String friendid;
+	@Column
+	private String friendname;
+	@Column
+	private String status;
+	@Column
+	private char isOnline;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public String getFriendid() {
+		return friendid;
+	}
+
+	public void setFriendid(String friendid) {
+		this.friendid = friendid;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public char getIsOnline() {
+		return isOnline;
+	}
+
+	public void setIsOnline(char isOnline) {
+		this.isOnline = isOnline;
+	}
+}

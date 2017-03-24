@@ -1,0 +1,37 @@
+/**
+ * 
+ */
+
+app.factory('jobservice',['$http', '$q',function($http,$q)
+     {
+	var REST_SERVICE_URL='http://localhost:8080/FriendZone/';
+	console.log('inside forumservice js');
+	
+	var factory = 
+	{
+			fetchAllJobs: fetchAllJorums,
+			createJob: createJob,
+	};
+	return factory;
+	
+	function fetchAllJobs()
+	{
+		console.log("inside fetch all jobs method of job service");
+		var deferred = $q.defer();
+		$http.get(REST_SERVICE_URL+'/jobgetall')
+		.then(
+	            function (response) 
+	            {
+	            	deferred.resolve(response.data); 
+	            	console.log("Forums Fetched successfully ");
+	            	//console.log("list of forums"+response.data);
+	            },
+	            function(errResponse){
+	                console.error('Error while fetching forum');
+	                deferred.reject(errResponse);
+	            });
+		return deferred.promise;
+	}
+
+     }
+]);

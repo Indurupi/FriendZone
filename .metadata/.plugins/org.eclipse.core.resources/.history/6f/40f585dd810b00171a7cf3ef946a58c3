@@ -1,0 +1,101 @@
+app.controller('jobcontroller',['jobservice','$location','$window','fid',
+						function(jobservice, $location, $window, fid) {
+							console.log("inside job controller js");
+							var self = this;
+							self.job = {
+								    primarykey: null,
+								    jobid: 101,
+								    userid: "hi@gmail.com"
+								  }
+
+							self.onejob = {
+								    primarykey: 1,
+								    jobid: 101,
+								    userid: "hi@gmail.com"
+								  }
+
+							self.jobs = [];
+							self.submit = submit;
+							self.reset = reset;
+							self.displayonejob = displayonejob;
+
+							fetchAllJobs();
+
+							function fetchOneForum() {
+								var jobId = jobid.jobid;
+								console.log("jobs length"
+										+ self.jobs.length);
+								for (var i = 0; i < self.jobid.length; i++) {
+									// $window.alert('inside for loop forum id
+									// is '+ forumid);
+									if (self.jobid[i].jobid == jobId) {
+
+										self.onejob = angular
+												.copy(self.jobid[i]);
+										break;
+									}
+								}
+							}
+
+							function fetchAllJobs() {
+								jobservice
+										.fetchAllJobs()
+										.then(
+												function(d) {
+													console.log("inside fetch all jobs in job controller");
+													// console.log('in
+													// controller json
+													// array'+JSON.stringify(jobs));
+													self.jobs = d;
+													//fetchOneJob();
+													// console.log("in
+													// controller json array
+													// "+JSON.stringify(self.jobs))
+												},
+												function(errResponse) {
+													console.error('Error while fetching forums');
+												});
+							}
+
+							function createForum(job) {
+									console.log('in controller json array'
+										+ JSON.stringify(job, null, 2));
+
+								jobservice
+										.createJob(job)
+										.then(
+												function(response) {
+													$window.alert("job created successfully");
+												},
+												function(errResponse) {
+													$window
+															.alert("Error in creating job");
+												});
+							}
+							
+							
+
+							function displayonejob(jobid) {
+								console.log('display one job method');
+								jobid.jobid= jobid;
+								var url = "http://localhost:8080/FriendZoneFrontEnd/#/viewonejob";
+								$window.location.href = url;
+							}
+
+							function submit() {
+								createForum(self.job);
+							}
+
+							function reset() {
+								self.job = {
+										qualification: "",
+									    status: "",
+									    jobid: null,
+									    jobtitle: "",
+									    datetime: null,
+									    companyname: "",
+									    salarypackage: "",
+									    jobdescription: ""
+								};
+							}
+						} ]);

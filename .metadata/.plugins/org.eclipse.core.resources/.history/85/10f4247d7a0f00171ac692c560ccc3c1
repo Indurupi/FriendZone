@@ -1,0 +1,173 @@
+package com.friendzone.DaoImpl;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.friendzone.DaoServices.FriendServices;
+import com.friendzone.Model.Friend;
+import com.friendzone.Model.Friend;
+
+@Repository
+@Transactional
+public class FriendDaoImpl implements FriendServices {
+
+	@Autowired
+	SessionFactory sessionFactory;
+
+	// public static final Logger logger =
+	// LoggerFactory.getLogger(FriendDaoImpl.class);
+
+	@Override
+	public boolean save(Friend friend) {
+		try {
+			// logger.debug("start of save method in FriendDaoImpl");
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			s.save(friend);
+			t.commit();
+			s.close();
+			// logger.debug("End of save method in FriendDaoImpl");
+			return true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			// logger.debug("End of save method in FriendDaoImpl");
+			return false;
+		}
+	}
+
+	@Override
+	public boolean saveOrUpdate(Friend friend) {
+		try {
+			// logger.debug("start of saveOrUpdate method in FriendDaoImpl");
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			s.saveOrUpdate(friend);
+			t.commit();
+			s.close();
+			// logger.debug("End of saveOrUpdate method in FriendDaoImpl");
+			return true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			// logger.debug("End of saveOrUpdate method in FriendDaoImpl");
+			return false;
+		}
+	}
+
+	@Override
+	public boolean delete(String userid, String friendid) {
+		try {
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			Friend friendtodelete = new Friend();
+			friendtodelete.setUserid(userid);
+			friendtodelete.setFriendid(friendid);
+			s.delete(friendtodelete);
+			t.commit();
+			s.close();
+			return true;
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean setStatusAccept(String id) {
+
+		try {
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			String hql = "update Friend SET status='a' where id= " + " '" + id + "'";
+			Query query = s.createQuery(hql);
+			query.executeUpdate();
+			t.commit();
+			s.close();
+			return true;
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean setStatusReject(String id) {
+		try {
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			String hql = "update Friend SET status='r' where id= " + " '" + id + "'";
+			Query query = s.createQuery(hql);
+			query.executeUpdate();
+			t.commit();
+			s.close();
+			return true;
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	@Override
+	public Friend get(String userid, String friendid) {
+		String hql = "from Friend where userid= '" + userid + "' and " + " friendid ='" + friendid + "'";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+
+		List<Friend> list = (List<Friend>) query.list();
+
+		if (list != null && !list.isEmpty()) {
+			return list;
+		}
+
+		return null;
+	}
+
+	@Override
+	public List<Friend> getmyfriends(String userid) {
+		// logger.debug("start of getallblogs method based on user id in
+		// FriendDaoImpl");
+		Session s = sessionFactory.openSession();
+		Transaction t = s.getTransaction();
+		t.begin();
+		// query for accepted friends alone ="from Friend where userid
+		// ="+"'"+userid+"' and status = '"+"A"+"'"
+		// this fetches all friends
+		// a condition must be written in order to match userid
+		ArrayList<Friend> friendsofuser = (ArrayList<Friend>) s
+				.createQuery("from Friend where userid =" + "'" + userid + "' and status = '" + "a" + "'").list();
+		System.out.println("this is friends of user in friend dao impl " + friendsofuser);
+		t.commit();
+		s.close();
+		// logger.debug("end of getallblogs method based on user id in
+		// FriendDaoImpl");
+		return friendsofuser;
+	}
+
+	@Override
+	public List<Friend> getNewFriendrequest(String userid) {
+		System.out.println("getfriend request daoimpl" + userid);
+		String hql = "from Friend where userid= " + " '" + userid + "' and status='" + "N'";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		@SuppressWarnings("unchecked")
+		List<Friend> list = query.list();
+		return list;
+	}
+
+}

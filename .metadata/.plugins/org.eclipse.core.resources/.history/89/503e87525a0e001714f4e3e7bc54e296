@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>FriendZone</title>
+<style type="text/css">
+.form-control:focus {
+	border: 2px solid #009688;
+}
+
+#signupdiv {
+	background: linear-gradient(to bottom, #e0f2f1 50%, #80cbc4 120%);
+	color: #ffffff;
+	padding-top: 100px;
+	height: 91%;
+}
+</style>
+</head>
+<body ng-app="friendzoneApp">
+
+	<div id="signupdiv" align="center" ng-controller="homecontrol as home">
+		<form ng-submit="home.submit()">
+
+			<div class="input-group" id="LoginPassword">
+				<span class="input-group-addon" id="basic-addon1">
+					<div class="glyphicon glyphicon-user"></div>
+				</span> <input type="text" class="form-control" placeholder="UserName"
+					aria-describedby="basic-addon1" ng-model="home.user1.username" required="required"/>
+			</div>
+
+			<div class="input-group" id="LoginUsername">
+				<span class="input-group-addon" id="basic-addon1">
+					<div class="glyphicon glyphicon-envelope"></div>
+				</span> <input type="text" class="form-control" placeholder="Email"
+					aria-describedby="basic-addon1" ng-model="home.user1.emailid" required="required"/>
+
+			</div>
+
+			<div style="color: #009688;">
+				<p style="color: #009688; " class="glyphicon glyphicon-hand-up"></p>
+				Login using this Email
+			</div>
+
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">
+					<div class="glyphicon glyphicon-lock"></div>
+				</span> <input type="password" class="form-control" placeholder="Password"
+					aria-describedby="basic-addon1" ng-model="home.user1.password" required="required" />
+			</div>
+
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">
+					<div class="glyphicon glyphicon-lock"></div>
+				</span> <input type="password" class="form-control"
+					placeholder="Confirm Password" aria-describedby="basic-addon1" required="required" />
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">
+					<div class="glyphicon glyphicon-phone"></div>
+				</span> <input type="text" class="form-control" placeholder="Phone Number"
+					aria-describedby="basic-addon1" ng-model="home.user1.phno" required="required" />
+			</div>
+			
+			<div class="form-group">
+							<select path="CategoryId" cssClass="form-control">
+								<option ng-repeat="c in clo" value="{{c.CategoryId}}">
+									{{c.CategoryName}}
+								</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<select path="SupplierId" cssClass="form-control">
+								<option ng-repeat="s in slo" value="{{s.SupplierId}}">
+									{{s.SupplierName}}
+								</option>
+							</select>
+						</div>
+
+			<!--<div class="input-group"> -->
+			<!--<span class="input-group-addon" id="basic-addon1"> -->
+			<!--<div class="glyphicon glyphicon-calendar"></div> -->
+			<!--</span> <input type="date" class="form-control" placeholder="DateOfBirth" -->
+			<!--		aria-describedby="basic-addon1" /> -->
+			<!--</div> -->
+
+			<div class="input-group" style="color: #000000">
+
+				<label style="color: #000000">Gender &nbsp; </label> <input
+					style="color: #000000" type="radio" value="male" />&nbsp;Male&nbsp;
+				<input style="color: #000000" type="radio" value="female" />&nbsp;Female
+			</div>
+
+			<!-- 			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+				<li value="male" ng-model="home.user1.gender">Male</li>
+				<li value="female" ng-model="home.user1.gender">Female</li>
+
+			</ul> -->
+
+			<button class="btn" id="custom-button" style="width: 18.3%"
+				type="submit">Sign Up</button>
+			<button class="btn" id="custom-button" style="width: 18.3%"
+				ng-click="home.reset()" type="reset">Reset</button>
+		</form>
+
+		<!-- 		<div ng-repeat="user in home.users1" style="color:#000000"> -->
+		<!-- 		Username:{{user.username}}<br> -->
+		<!-- 		password:{{user.password}}<br> -->
+		<!-- 		phonenumber:{{user.phno}}<br> -->
+		<!-- 		status:{{user.status}}<br> -->
+		<!-- 		emailid:{{user.emailid}}<br> -->
+		<!-- 		</div> -->
+	</div>
+
+</body>
+
+<!-- <script src="js/jquery-1.10.1.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-route.js"></script>
+<script src="js/app.js"></script>
+<script src="js/controller/blogcontroller.js"></script>
+<script src="js/service/blogservice.js"></script>
+<script src="js/controller/homecontroller.js"></script>
+<script src="js/service/homeservice.js"></script>
+ -->
+</html>

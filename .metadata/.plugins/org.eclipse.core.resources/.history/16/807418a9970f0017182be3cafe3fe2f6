@@ -1,0 +1,63 @@
+/**
+ * 
+ */
+
+app.controller('friendcontroller', [ '$scope', '$rootScope', 'friendservice',
+		'$location', '$window',
+		function($scope, $rootScope, friendservice, $location, $window) {
+	
+		console.log("inside friend controller js method");
+		
+		var self = this;
+		var currentuser =$rootScope.currentUser.username;
+		var currentuseremailid = $rootScope.currentUser.emailid;
+		
+		console.log("current user email id in friend controller"+currentuseremailid);
+		
+		self.friend =
+		{
+			    id: "",
+			    userid:"" ,
+			    friendid: "",
+			    status: "",
+			    isOnline: ""
+		};
+		
+		self.friends = [];
+		self.removefriend = removefriend ;
+		
+		
+		fetchMyFriends();
+		
+		function removefriend(id)
+		{
+			console.log("the id to be removed"+id)
+			friendservice.rejectfriend(id).then(
+			function(d)
+			{
+				console.log("inside fetch my friends in friend controller");	
+				$window.alert("error while removing your friend")
+			},
+			function(errResponse) {
+				console.error('Error while removing your friend');
+				$window.alert('Error while removing your friend');
+			});
+		}
+		
+		function fetchMyFriends() {
+			friendservice
+					.fetchMyFriends(currentuseremailid)
+					.then(
+							function(d) {
+								console.log("inside fetch my friends in friend controller");	
+								self.friends = d;
+								console.log("ready to fetch my friends");
+							
+							},
+							function(errResponse) {
+								console.error('Error while fetching your friends');
+								$window.alert('Error while fetching your friends');
+							});
+		}
+		
+		}]);

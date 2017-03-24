@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+
+app.factory('jobservice',['$http', '$q',function($http,$q)
+     {
+	
+     }
+]);

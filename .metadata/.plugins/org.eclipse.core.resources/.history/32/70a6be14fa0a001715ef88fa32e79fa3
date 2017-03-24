@@ -1,0 +1,10 @@
+/**
+ * 
+ */
+
+app.factory('jobservice',['$http', '$q',function($http,$q)
+     {
+	var REST_SERVICE_URL='http://localhost:8080/FriendZone/';
+	console.log('inside forumservice js');
+     }
+]);

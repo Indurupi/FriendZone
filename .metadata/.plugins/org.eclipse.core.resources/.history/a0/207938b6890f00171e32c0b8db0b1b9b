@@ -1,0 +1,38 @@
+/**
+ * 
+ */
+app.factory('friendservice',['$http', '$q',function($http,$q)
+    {
+	var REST_SERVICE_URL='http://localhost:8080/FriendZone';
+	console.log('inside friendservice js');
+	
+	var factory = 
+	{
+			fetchMyFriends: fetchMyFriends,
+			addFriend: addFriend,
+			
+	};
+	return factory;
+	
+	function fetchMyFriends(userid)
+    {
+    	console.log("inside fetch my friends in friend service");
+        var deferred = $q.defer();
+        $http.get(REST_SERVICE_URL+'/getmyfriends/{'+userid+'}')
+            .then(
+            function (response) 
+            {
+            	deferred.resolve(response.data); 
+            	console.log("list of friends of "+userid+"is :   "+response.data);
+            },
+            function(errResponse){
+                console.error('Error while fetching Users');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
+	
+    }
+
+]);

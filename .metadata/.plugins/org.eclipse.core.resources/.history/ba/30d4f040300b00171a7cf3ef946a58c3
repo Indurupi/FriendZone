@@ -1,0 +1,113 @@
+app.controller('jobcontroller',['jobservice','$location','$window','fid',
+						function(jobservice, $location, $window, fid) {
+							console.log("inside job controller js");
+							var self = this;
+							self.job = {
+									qualification: "",
+								    status: "",
+								    jobid: null,
+								    jobtitle: "",
+								    datetime: null,
+								    companyname: "",
+								    salarypackage: "",
+								    jobdescription: ""
+							};
+
+							self.onejob = {
+									qualification: "",
+								    status: "",
+								    jobid: null,
+								    jobtitle: "",
+								    datetime: null,
+								    companyname: "",
+								    salarypackage: "",
+								    jobdescription: ""
+							};
+
+							self.jobs = [];
+							self.submit = submit;
+							self.reset = reset;
+							self.displayonejob = displayonejob;
+
+							fetchAllJobs();
+
+							function fetchOneForum() {
+								var jobId = jobid.jobid;
+								console.log("jobs length"
+										+ self.jobs.length);
+								for (var i = 0; i < self.jobid.length; i++) {
+									// $window.alert('inside for loop forum id
+									// is '+ forumid);
+									if (self.jobid[i].jobid == jobId) {
+
+										self.onejob = angular
+												.copy(self.jobid[i]);
+										break;
+									}
+								}
+							}
+
+							function fetchAllJobs() {
+								jobservice
+										.fetchAllJobs()
+										.then(
+												function(d) {
+													console.log("inside fetch all jobs in job controller");
+													// console.log('in
+													// controller json
+													// array'+JSON.stringify(users1));
+													self.jobs = d;
+													//fetchOneJob();
+													// console.log("in
+													// controller json array
+													// "+JSON.stringify($scope.users1))
+												},
+												function(errResponse) {
+													console.error('Error while fetching forums');
+												});
+							}
+
+							function createForum(job) {
+								console.log('in controller forum: '
+										+ job.jobtitle);
+
+								console.log('in controller json array'
+										+ JSON.stringify(job, null, 2));
+
+								forumservice
+										.createJob(job)
+										.then(
+												function(response) {
+													$window
+															.alert("forum created successfully");
+												},
+												function(errResponse) {
+													$window
+															.alert("error in creating forum");
+												});
+							}
+
+							function displayonejob(jobid) {
+								console.log('display one job method');
+								jobid.jobid= jobid;
+								var url = "http://localhost:8080/FriendZoneFrontEnd/#/viewonejob";
+								$window.location.href = url;
+							}
+
+							function submit() {
+								createForum(self.job);
+							}
+
+							function reset() {
+								self.job = {
+										qualification: "",
+									    status: "",
+									    jobid: null,
+									    jobtitle: "",
+									    datetime: null,
+									    companyname: "",
+									    salarypackage: "",
+									    jobdescription: ""
+								};
+							}
+						} ]);

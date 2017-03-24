@@ -1,0 +1,43 @@
+package com.friendzone.Model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class JobApplicationModel {
+	
+	@Id
+	int Primarykey;
+	
+	@Column
+	long Jobid;
+	
+	@Column
+	String Userid;
+
+	public int getPrimarykey() {
+		return Primarykey;
+	}
+
+	public void setPrimarykey(int primarykey) {
+		Primarykey = primarykey;
+	}
+
+	public long getJobid() {
+		return Jobid;
+	}
+
+	public void setJobid(long jobid) {
+		Jobid = jobid;
+	}
+
+	public String getUserid() {
+		return Userid;
+	}
+
+	public void setUserid(String userid) {
+		Userid = userid;
+	}
+
+}

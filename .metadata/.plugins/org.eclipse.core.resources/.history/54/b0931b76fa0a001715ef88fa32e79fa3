@@ -1,0 +1,25 @@
+/**
+ * 
+ */
+
+app.factory('jobservice',['$http', '$q',function($http,$q)
+     {
+	var REST_SERVICE_URL='http://localhost:8080/FriendZone/';
+	console.log('inside forumservice js');
+	
+	var factory = 
+	{
+			fetchAllJobs: fetchAllJorums,
+			createJob: createJob,
+	};
+	return factory;
+	
+	function fetchAllJobs()
+	{
+		console.log("inside fetch all jobs method of job service");
+		var deferred = $q.defer();
+		$http.get(REST_SERVICE_URL+'')
+	}
+
+     }
+]);

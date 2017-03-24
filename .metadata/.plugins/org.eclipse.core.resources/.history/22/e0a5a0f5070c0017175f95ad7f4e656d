@@ -1,0 +1,112 @@
+package com.friendzone.DaoImpl;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Logger;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.friendzone.DaoServices.CommentServices;
+
+import com.friendzone.Model.CommentsModel;
+
+@Repository
+@Transactional
+public class CommentDaoImpl implements CommentServices{
+
+
+	@Autowired
+	SessionFactory sessionFactory;
+	
+	//public static final Logger logger = LoggerFactory.getLogger(CommentDaoImpl.class);
+	
+	@Override
+	public boolean insertComment(CommentsModel comment) {
+		try {
+			//logger.debug("start of insert method in CommentDaoImpl");
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			s.save(comment);
+			t.commit();
+			s.close();
+			//logger.debug("end of insert method in CommentDaoImpl");
+			return true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			//logger.debug("end of insert method in CommentDaoImpl");
+			return false;
+		}
+	}
+
+	@Override
+	public boolean updateComment(CommentsModel cm) {
+		try {
+			//logger.debug("start of updatecomment method in CommentDaoImpl");
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			s.update(cm);
+			t.commit();
+			s.close();
+			//logger.debug("end of updatecomment method in CommentDaoImpl");
+			return true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean deleteComment(int commentid) {
+		try {
+			//logger.debug("start of delate method in CommentDaoImpl");
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			s.delete(commentid);
+			t.commit();
+			s.close();
+			return true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public ArrayList<CommentsModel> viewallcommentsforblog(int blogid) {
+		//logger.debug("start of viewallcommentsforblog in CommentDaoImpl");
+		Session s = sessionFactory.openSession();
+		Transaction t = s.getTransaction();
+		t.begin();
+		ArrayList<CommentsModel> allcomments = (ArrayList<CommentsModel>) s.createQuery("from CommentsModel").list();
+		Iterator<CommentsModel> commentiterator= allcomments.listIterator();
+		ArrayList<CommentsModel> commentsofblog = new ArrayList<CommentsModel>();
+		while(commentiterator.hasNext())
+		{
+			
+			CommentsModel commentitems = commentiterator.next();
+			if(commentitems.getBlogId() == blogid)
+			{
+				commentsofblog.add(commentitems);
+			}
+			else
+			{
+				break;
+			}
+		}
+		t.commit();
+		s.close();
+
+		return commentsofblog;
+	}
+
+}

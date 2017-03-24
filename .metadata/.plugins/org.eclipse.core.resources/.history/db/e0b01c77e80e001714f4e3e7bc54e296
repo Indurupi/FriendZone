@@ -1,0 +1,34 @@
+package com.friendzone.Configurations;
+
+import javax.servlet.ServletRegistration;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+@Configuration
+public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+	@Override
+	protected Class<?>[] getRootConfigClasses() {
+		return new Class[] { ApplicationConfiguration.class};
+		
+	}
+
+	@Override
+	protected Class<?>[] getServletConfigClasses() {
+		return null;
+	}
+
+	@Override
+	protected String[] getServletMappings() {
+		return new String[]{
+				"/"};
+	}
+	
+	  @Override
+	  protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+	    registration.setInitParameter("dispatchOptionsRequest", "true");
+	    registration.setAsyncSupported(true);
+	  }
+
+}

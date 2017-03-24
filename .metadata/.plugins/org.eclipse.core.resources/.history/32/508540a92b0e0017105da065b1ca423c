@@ -1,0 +1,108 @@
+package com.friendzone.Controller;
+
+import java.util.ArrayList;
+import java.util.logging.Logger;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.friendzone.DaoServices.Userservices;
+import com.friendzone.Model.UserRegModel;
+
+@RestController
+public class UserController {
+
+	@Autowired
+	Userservices userservices;
+	
+	//public static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+	@RequestMapping(value = "/user", method = RequestMethod.POST)
+	public ResponseEntity<String> registeruser(@RequestBody UserRegModel urt) {
+		// System.out.println("this is new user"+urt);
+		//logger.info("inside register user method in user controller");
+		System.out.println("inside user controller register method");
+		
+		System.out.println("username  " + urt.getUsername());
+		System.out.println("this is email id " + urt.getEmailid());
+		System.out.println("password "+urt.getPassword());
+		System.out.println("Phone number "+urt.getPhno());
+		System.out.println("status "+urt.getStatus());
+		if (userservices.insertUser(urt)) {
+			return new ResponseEntity<String>(HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+	
+//	@RequestMapping(value = "/user/{emailid:.+}", method = RequestMethod.POST)
+//	public ResponseEntity<String> updateuser(@PathVariable("emailid") String emailid,@RequestBody UserRegModel urt)
+//	{
+//		System.out.println("the email id is " + emailid);
+//		String useremail = emailid.substring(1, emailid.length() - 1);
+//		System.out.println(useremail);
+//		UserRegModel user = userservices.viewOneUser(useremail);
+//		if (user != null) 
+//		{
+//			System.out.println("username  " + urt.getUsername());
+//			System.out.println("this is email id " + urt.getEmailid());
+//			if (userservices.updateUser(urt)) 
+//			{
+//				return new ResponseEntity<String>(HttpStatus.OK);
+//			}
+//			else 
+//			{
+//				return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
+//			}
+//		}
+//		else
+//		{
+//			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+//		}
+//	}
+
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<UserRegModel>> listAllUsers() {
+		System.out.println("inside user controller list all users method");
+		ArrayList<UserRegModel> users = userservices.viewUsers();
+		//System.out.println(users);
+		if (users.isEmpty()) {
+			return new ResponseEntity<ArrayList<UserRegModel>>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<ArrayList<UserRegModel>>((ArrayList<UserRegModel>) users, HttpStatus.OK);
+		}
+	}
+
+	@RequestMapping(value = "/user/{emailid:.+}/{password}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserRegModel> getoneuser(@PathVariable("emailid") String emailid,@PathVariable("password") String password) {
+		System.out.println("the email id is " + emailid);
+		String useremail = emailid.substring(1, emailid.length() - 1);
+		System.out.println(useremail);
+		UserRegModel user = userservices.viewOneUser(useremail,password);
+		if (user == null) {
+			System.out.println("user with email id " + useremail + " does not exist");
+			return new ResponseEntity<UserRegModel>(user, HttpStatus.NOT_FOUND);
+		} else {
+			System.out.println("the user is" + user.toString());
+			return new ResponseEntity<UserRegModel>(user, HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value="/user/logout",method=RequestMethod.GET)
+	public ResponseEntity<UserRegModel> logout()
+	{
+		System.out.println("logout method");
+		UserRegModel userdetails
+		return new ResponseEntity<Userdetails>(userdetails,HttpStatus.OK);
+	}
+
+}

@@ -1,0 +1,164 @@
+package com.friendzone.DaoImpl;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
+import com.friendzone.DaoServices.JobServices;
+import com.friendzone.Model.JobApplicationModel;
+import com.friendzone.Model.JobModel;
+
+
+@Repository
+public class JobDaoImpl implements JobServices {
+
+
+	@Autowired
+	SessionFactory sessionFactory;
+	
+	//public static final Logger logger = LoggerFactory.getLogger(JobDaoImpl.class);
+	
+	@Override
+	public boolean createJob(JobModel jobModel) {
+		try {
+			//logger.info("start of create job method in jobdaoimpl");
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			s.save(jobModel);
+			t.commit();
+			//logger.info("end of create job method in jobdaoimpl");
+			return true;
+		} catch (HibernateException e) {
+			
+			//logger.info("end of create job method in jobdaoimpl");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean updateJob(JobModel jobModel) {
+		try {
+			//logger.info("start of update job method in jobdaoimpl");
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			s.update(jobModel);
+			t.commit();
+			s.close();
+			//logger.info("end of update job method in jobdaoimpl");
+			return true;
+		} catch (HibernateException e) {
+			
+			e.printStackTrace();
+			//logger.info("end of update job method in jobdaoimpl");
+			return false;
+		}
+	}
+
+
+	@Override
+	public ArrayList<JobModel> fetchAllJobs() {
+		//logger.info("start of fetch all jobs method in jobdaoimpl");
+		System.out.println("inside fetch all jobs in job dao impl");
+		Session s = sessionFactory.openSession();
+		Transaction t = s.getTransaction();
+		t.begin();
+		ArrayList<JobModel> joblist = (ArrayList<JobModel>) s.createQuery("from JobModel").list();
+		ArrayList<JobModel> vacantjoblist = new ArrayList<JobModel>();
+		Iterator<JobModel> joblistiteration = joblist.listIterator();
+		while (joblistiteration.hasNext()) {
+			JobModel jobs = (JobModel) joblistiteration.next();
+			//System.out.println("this is job"+jobs.toString());
+			if(jobs.getStatus().equalsIgnoreCase("vacant"))
+			{
+				vacantjoblist.add(jobs);
+				//System.out.println("this is vacant job  : "+jobs.getJobtitle());
+			}
+			
+		}
+		t.commit();
+		s.close();
+		//logger.info("end of fetch all jobs method in jobdaoimpl");
+		return vacantjoblist;
+	}
+
+	@Override
+	public JobModel fetchOneJob(long Jobid) {
+		//logger.info("start of fetch one job method in jobdaoimpl");
+		Session s = sessionFactory.openSession();
+		Transaction t = s.getTransaction();
+		t.begin();
+		JobModel job = s.get(JobModel.class, Jobid);
+		t.commit();
+		s.close();
+		//logger.info("end of fetch one job method in jobdaoimpl");
+		return job;
+	}
+
+	@Override
+	public boolean applyJob(JobApplicationModel jobApplicationModel) {
+		try {
+			//logger.info("start of apply job method in jobdaoimpl");
+			Session s = sessionFactory.openSession();
+			Transaction t = s.getTransaction();
+			t.begin();
+			s.save(jobApplicationModel);
+			t.commit();
+			//logger.info("end of apply job method in jobdaoimpl");
+			return true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			//logger.info("end of apply job method in jobdaoimpl");
+			return false;
+		}
+	}
+
+	@Override
+	public ArrayList<JobApplicationModel> viewAppliedJobs() {
+		
+		//logger.info("start of fetch all jobs method in jobdaoimpl");
+				System.out.println("inside fetch all jobs in job dao impl");
+				Session s = sessionFactory.openSession();
+				Transaction t = s.getTransaction();
+				t.begin();
+				ArrayList<JobModel> joblist = (ArrayList<JobModel>) s.createQuery("from JobApplicationModel").list();
+				
+				t.commit();
+				s.close();
+				//logger.info("end of fetch all jobs method in jobdaoimpl");
+				return vacantjoblist;
+				
+		//logger.info("start of fetch all jobs method in jobdaoimpl");
+			/*	System.out.println("inside view appllied jobs in job dao impl");
+				Session s = sessionFactory.openSession();
+				Transaction t = s.getTransaction();
+				t.begin();
+				ArrayList<JobApplicationModel> joblist = (ArrayList<JobApplicationModel>) s.createQuery("from JobApplicationModel").list();
+				ArrayList<JobApplicationModel> appliedjoblist = new ArrayList<JobApplicationModel>();
+				Iterator<JobApplicationModel> joblistiteration = joblist.listIterator();
+				while (joblistiteration.hasNext()) {
+					JobApplicationModel appliedjobs = (JobApplicationModel) joblistiteration.next();
+					//System.out.println("this is job"+jobs.toString());
+					if(appliedjobs.getUserid().equals(userid))
+					{
+						appliedjoblist.add(appliedjobs);
+						//System.out.println("this is vacant job  : "+jobs.getJobtitle());
+					}
+					
+				}
+				t.commit();
+				s.close();
+				//logger.info("end of fetch all jobs method in jobdaoimpl");
+				return appliedjoblist;*/
+		return null;
+	}
+}

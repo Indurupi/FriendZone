@@ -1,0 +1,29 @@
+/*console.log("inside blog services js");*/
+app.factory('loginservice',['$http', '$q',function($http,$q)
+    {
+	var REST_SERVICE_URL = 'http://localhost:8080/FriendZone/user';
+	
+	
+	function loginuser(emailid,password)
+	{
+		console.log('inside login user method in login service');
+		console.log('inside email'+emailid);
+		console.log('inside login user method in login service');
+		var deferred = $q.defer();
+		$http.get(REST_SERVICE_URL+'/bloggetone/'+blogid)
+		.then
+		(
+				function(response)
+			{
+			deferred.resolve(response.data);
+			console.log("single blog"+response.data);
+			},
+			function(errResponse)
+			{
+				console.error('Error while fetching blogs');
+				deferred.reject(errResponse);
+			}
+		);
+		return deferred.promise;
+	}
+}]);

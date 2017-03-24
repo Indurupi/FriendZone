@@ -1,0 +1,118 @@
+/**
+ * 
+ */
+app.factory('friendservice',['$http', '$q',function($http,$q)
+    {
+	var REST_SERVICE_URL='http://localhost:8080/FriendZone';
+	console.log('inside friendservice js');
+	
+	var factory = 
+	{
+			fetchMyFriends: fetchMyFriends,
+			rejectfriend : rejectfriend,
+			addfriend : addfriend
+	};
+	return factory;
+	
+	function fetchMyFriends(userid)
+    {
+    	console.log("inside fetch my friends in friend service");
+        var deferred = $q.defer();
+        $http.get(REST_SERVICE_URL+'/getmyfriends/{'+userid+'}')
+            .then(
+            function (response) 
+            {
+            	deferred.resolve(response.data); 
+            	console.log("list of friends of "+userid+"is :   "+response.data);
+            	
+            },
+            function(errResponse){
+                console.error('Error while fetching friends');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
+	
+	function seenewfriendrequests(userid)
+    {
+    	console.log("inside see new friend request method in friend service");
+        var deferred = $q.defer();
+        $http.get(REST_SERVICE_URL+'/seenewequest/{'+userid+'}')
+            .then(
+            function (response) 
+            {
+            	deferred.resolve(response.data); 
+            	console.log("list of new request of "+userid+"is :   "+response.data);
+            	
+            },
+            function(errResponse){
+                console.error('Error while fetching new requests');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+    }
+
+	function rejectfriend(id)
+	{
+		console.log("friend id"+id);
+		console.log("inside fetch my friends in friend service");
+        var deferred = $q.defer();
+        $http.post(REST_SERVICE_URL+'/rejectfriend/'+id)
+            .then(
+            function (response) 
+            {
+            	deferred.resolve(response.data); 
+            	console.log("remove the friend"+response.data);
+            },
+            function(errResponse){
+                console.error('Error while removing friend');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+	}
+	
+	function acceptfriend(id)
+	{
+		console.log("friend id"+id);
+		console.log("inside fetch my friends in friend service");
+        var deferred = $q.defer();
+        $http.post(REST_SERVICE_URL+'/rejectfriend/'+id)
+            .then(
+            function (response) 
+            {
+            	deferred.resolve(response.data); 
+            	console.log("remove the friend"+response.data);
+            },
+            function(errResponse){
+                console.error('Error while removing friend');
+                deferred.reject(errResponse);
+            }
+        );
+        return deferred.promise;
+	}
+	
+	function addfriend(friend)
+	{
+		console.log('inside add friend method in friend service')
+		console.log('in service json array friend to be created'+JSON.stringify(friend));
+		var deferred = $q.defer();
+		$http.post(REST_SERVICE_URL+'/addfriend',friend)
+		.then(
+				function (response) 
+	            {
+	                deferred.resolve(response);
+	            },
+	            function(errResponse)
+	            {
+	              //console.error("Error while creating User"+errResponse);
+	                deferred.reject(errResponse);
+	            });
+		return deferred.promise;
+	}
+	
+    }
+
+]);

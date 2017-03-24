@@ -1,0 +1,5 @@
+package com.friendzone.DaoServices;
+
+public interface FriendServices {
+
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>FriendZone</title>
+<style type="text/css">
+#holder {
+	display: inline-block;
+	border-radius: 5px;
+	background: linear-gradient(to bottom, #b2dfdb 60%, #00796b 130%);
+	box-shadow: 0px 0px 20px #b2dfdb;
+	margin: 10px 25px;
+	justify-content: center;
+	width: 80%;
+	padding: 20px;
+}
+
+#holder:HOVER {
+	cursor: pointer;
+	box-shadow: 10px 10px 20px #b2dfdb;
+	/* background: linear-gradient(to bottom, #b2dfdb 60%, #80CBC4 130%); */
+}
+
+#custom-button {
+	color: #ffffff;
+	width: 20%;
+	background-color: #009688;
+	font-family: Verdana, san-serif;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.form-control:focus {
+	border: 2px solid #009688;
+}
+</style>
+</head>
+<body ng-app="friendzoneApp">
+	<div ng-controller="jobcontroller as jobc">
+		<div id="holder" ng-repeat="jobobject in jobc.jobs"
+			ng-click="jobc.displayoneblog(jobobject.jobid)">
+			<div>
+				<div class="col-lg-8" id="blogblock">
+
+					<h1>{{jobobject.jobtitle}}</h1>
+
+					<p class="lead">by {{jobobject.postedUser}} </p>
+					<hr>
+
+					<!-- Date/Time -->
+					<p>
+						<span class="glyphicon glyphicon-time"></span> Posted on
+						{{jobobject.datetime}}
+					</p>
+
+					<hr>
+					<p>Company Name : {{jobobject.companyname}}</p>
+					<p>Salary Package : {{jobobject.salarypackage}}</p>
+					<p>Job Description : {{jobobject.jobdescription}}</p>
+					<hr>
+								
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+package com.friendzone.Model;
+
+import javax.persistence.Entity;
+
+@Entity
+public class JobModel {
+	
+	long Jobid;
+	
+	String Jobtitle;
+	
+	String Jobdescription;
+	
+	Date datetime;
+	
+	
+
+}

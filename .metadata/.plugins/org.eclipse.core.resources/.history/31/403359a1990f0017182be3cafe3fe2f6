@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>FriendZone</title>
+<style type="text/css">
+	
+	#removelink {
+		color: #009688;
+		font-size: 20px;
+	}
+	#holder {
+		display: inline-block;
+		background: linear-gradient(to bottom, #b2dfdb 60%, #00796b 130%);
+		border-radius: 5px;
+		box-shadow: 5px 5px 10px #bdbdbd;
+		margin: 10px;
+		height: 150px;
+		width: 300px;
+		padding: 20px;
+	}
+	</style>
+</head>
+<body ng-app="friendzoneApp">
+<div class="holder" ng-controller="homecontroller as uc">
+		<div id="holder" class ng-repeat = "userobj in fc.friends">
+			
+				<div class="lead">Friend Email id : {{friendsobj.friendid}}</div>
+				
+				<button ng-click="fc.add(friendsobj.id)" class="btn" id="custom-button" style="width:90%">Remove Friend</button>	
+		</div>
+	</div>
+</body>
+</html>

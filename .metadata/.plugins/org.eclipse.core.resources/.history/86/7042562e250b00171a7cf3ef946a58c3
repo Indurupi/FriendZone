@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="ISO-8859-1">
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<title>FriendZone</title>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+<style type="text/css">
+.form-control:focus {
+	border: 2px solid #009688;
+}
+</style>
+
+</head>
+
+<body ng-app="friendzoneApp">
+
+
+	<!-- Page Content -->
+	<div class="container" ng-controller="forumcontroller as forumc">
+
+		<div class="row">
+
+			<!-- forum Post Content Column -->
+			<div class="col-lg-8">
+				<form ng-submit="forumc.submit()" method="post">
+
+					<!-- Forum Post -->
+
+					<!-- Title -->
+					<h1>
+						<div class="form-group">
+							<label>Forum Title</label> <input type="text"
+								class="form-control" placeholder="Forum Title"
+								ng-model="forumc.forum.forumTitle">
+						</div>
+					</h1>
+
+					<!-- Author -->
+					<p class="lead">Posted by
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Admin Name"
+							ng-model="forumc.forum.postedBy" />
+					</div>
+					</p>
+
+					<hr>
+					<!-- Preview Image -->
+					<!--  <img class="img-responsive" src="http://placehold.it/900x300" alt=""> -->
+
+					<!-- Post Content -->
+					<!--   <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p> -->
+					<div class="form-group">
+						<label>Forum Description</label>
+						<textarea class="form-control" rows="20"
+							placeholder="Forum Description"
+							ng-model="forumc.forum.forumDescription"></textarea>
+					</div>
+					<hr>
+					<button class="btn" id="custom-button" type="submit">Create
+						Forum</button>
+					<button class="btn" id="custom-button" ng-click="forumc.reset()"
+						type="reset">Reset</button>
+				</form>
+			</div>
+
+		</div>
+
+	</div>
+	<!-- /.container -->
+
+</body>
+
+</html>

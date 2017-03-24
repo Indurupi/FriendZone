@@ -1,0 +1,141 @@
+'use strict';
+var app = angular.module("friendzoneApp",['ngRoute','ngCookies']);
+app.value('bid', {id : 1});
+app.value('fid', {fid : 22});
+app.value('jobid', {jobid : 1});
+
+app.config(function($routeProvider) {
+	$routeProvider
+	
+	.when("/", {
+		templateUrl : "login.html",
+		controller : "logincontrol"
+
+	})
+
+	.when("/login", {
+		templateUrl : "login.html",
+		controller : "logincontrol"
+
+	})
+
+	.when("/createblog", {
+		templateUrl : "createblog.html",
+		controller : "blogcontrol"
+	})
+
+	.when("/viewallblogs", {
+		templateUrl : "viewallblogs.html",
+		controller : "blogcontrol"
+	})
+
+	.when("/viewoneblog", {
+		templateUrl : "viewoneblog.html",
+		controller : "blogcontrol"
+
+	})
+
+	.when("/createforum", {
+		templateUrl : "createforum.html",
+		controller : "forumcontroller"
+	})
+
+	.when("/viewallforums", {
+		templateUrl : "viewallforums.html",
+		controller : "forumcontroller"
+	})
+
+	.when("/viewoneforum", {
+		templateUrl : "viewoneforum.html",
+		controller : "forumcontroller"
+	})
+
+	.when("/createjob", {
+		templateUrl : "createjob.html",
+		controller : "jobcontroller"
+	})
+
+	.when("/viewalljobs", {
+		templateUrl : "viewalljobs.html",
+		controller : "jobcontroller"
+	})
+
+	.when("/viewonejob", {
+		templateUrl : "viewonejob.html",
+		controller : "jobcontroller"
+	})
+
+	.when("/signup", {
+		templateUrl : "signup.html",
+		controller : "homecontrol"
+	})
+	
+	.when("/chat", {
+		templateUrl : "chat.html",
+		controller : "chatcontroller"
+	})
+	
+	.when("/viewmyfriends", {
+		templateUrl : "viewmyfriends.html",
+		controller : "friendcontroller"
+	})
+	
+	.when("/viewallusers", {
+		templateUrl : "viewallusers.html",
+		controller  : "homecontrol"	
+	})
+	
+	.when("/viewnewrequests", {
+		templateUrl : "viewnewrequests.html",
+		controller  : "friendcontroller"	
+	})
+});
+
+
+app.run(function($rootScope,$location,$http,$cookieStore){
+
+	 $rootScope.$on('$locationChangeStart', function (event, next, current) {
+		 
+		 console.log(" checking on location change");
+	   
+		 var userPages = ['/viewonejob','/viewalljobs','/viewoneforum','/viewallforums','/viewoneblog','/viewallblogs', '/createblog','/viewmyfriends','/viewallusers','/viewnewrequests']
+		 var adminPages = ['/createjob','/createforum','/manage_users']
+		 
+		 var currentPage = $location.path()
+		 console.log("currentpage:" +currentPage)
+	     console.log($.inArray(currentPage, userPages))
+		 console.log($.inArray(currentPage, adminPages))
+		 
+		 var isUserPage = $.inArray(currentPage, userPages) >= 0;
+		 var isAdminPage = $.inArray(currentPage, adminPages) >=0;
+		 
+		 var isLoggedIn = $rootScope.currentUser.username;
+	       
+		 console.log("isLoggedIn:" +isLoggedIn)
+	     console.log("isUserPage:" +isUserPage)
+	     console.log("isAdminPage:" +isAdminPage)
+	        
+	        if(!isLoggedIn)
+	        	{
+	        	
+	        	 if (isUserPage || isAdminPage) {
+		        	  console.log("Navigating to login page:");
+		        	  alert("You need to log in to view this page");
+		        	  $location.path('/login');
+		            }
+	        	}
+			 else 
+	        	{
+				 var role = $rootScope.currentUser.role;
+				 if(isAdminPage && role!='admin' )
+					 {
+					  alert("You can not do this operation as you are logged as : " + role );
+					 }
+	        	}   
+	 } );	 
+	 
+    $rootScope.currentUser = $cookieStore.get('currentUser') || {};
+    if ($rootScope.currentUser) {
+        $http.defaults.headers.common['Authorization'] = 'Basic' + $rootScope.currentUser; 
+    }
+});

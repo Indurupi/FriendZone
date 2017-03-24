@@ -1,0 +1,81 @@
+package com.friendzone.Model;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class JobModel {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	long Jobid;
+	
+	@Column
+	String Jobtitle;
+	
+	@Column
+	String Jobdescription;
+	
+	@Column
+	Date Datetime;
+	
+	@Column
+	String qualification;
+	
+	@Column
+	String status="vacant";
+
+	public long getJobid() {
+		return Jobid;
+	}
+
+	public void setJobid(long jobid) {
+		Jobid = jobid;
+	}
+
+	public String getJobtitle() {
+		return Jobtitle;
+	}
+
+	public void setJobtitle(String jobtitle) {
+		Jobtitle = jobtitle;
+	}
+
+	public String getJobdescription() {
+		return Jobdescription;
+	}
+
+	public void setJobdescription(String jobdescription) {
+		Jobdescription = jobdescription;
+	}
+
+	public Date getDatetime() {
+		return Datetime;
+	}
+
+	public void setDatetime(Date datetime) {
+		Datetime = datetime;
+	}
+
+	public String getQualification() {
+		return qualification;
+	}
+
+	public void setQualification(String qualification) {
+		this.qualification = qualification;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+}

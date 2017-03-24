@@ -1,0 +1,6 @@
+/*console.log("inside blog services js");*/
+app.factory('loginservice',['$http', '$q',function($http,$q)
+    {
+	var REST_SERVICE_URL = 'http://localhost:8080/FriendZone/user';
+	
+}]);

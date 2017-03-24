@@ -1,0 +1,113 @@
+package com.friendzone.Controller;
+
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.friendzone.DaoServices.Blogservices;
+import com.friendzone.Model.BlogModel;
+
+@RestController
+public class BlogController {
+	
+	//private static final Logger logger = LoggerFactory.getLogger(BlogController.class);
+	@Autowired
+	Blogservices blogservices;
+	//logger.info("inside blog controller or rest service");
+	@RequestMapping(value = "/bloginsert", method = RequestMethod.POST)
+	public ResponseEntity<String> insertBlog(@RequestBody BlogModel blog) {
+		//logger.info("inside insert blog method in blog controller");
+		
+		/*System.out.println("inside insertblog method of rest services");
+		
+		System.out.println("blog id : "+ blog.getBlogid());
+		System.out.println("blog title : "+ blog.getBlogTitle());
+		System.out.println("blog description : "+blog.getBlogDescription());
+		System.out.println("blog posted user : "+blog.getUserId());
+		System.out.println("blog date : "+blog.getPostedDate());*/
+		
+		if (blogservices.createBlog(blog)) {
+			return new ResponseEntity<String>(HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
+		}
+		
+	}
+
+	@RequestMapping(value = "/blogupdate", method = RequestMethod.POST)
+	public ResponseEntity<BlogModel> updateBlog(@RequestBody BlogModel blog) {
+		//logger.info("inside update blog method in blog controller");
+		if (blogservices.updateBlog(blog)) {
+			return new ResponseEntity<BlogModel>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<BlogModel>(HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+
+	@RequestMapping(value = "/bloggetone/{blogid}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<BlogModel> viewOneBlog(@PathVariable("blogid") int blogid) {
+		//logger.info("inside view one blog method in blog controller");
+		System.out.println("the blog id is " + blogid);
+
+		BlogModel blog = blogservices.getBlog(blogid);
+		if (blog == null) {
+			System.out.println("blog with  id " + blogid + " does not exist");
+			return new ResponseEntity<BlogModel>(blog, HttpStatus.NOT_FOUND);
+		} else {
+			System.out.println("the user is" + blog.toString());
+			return new ResponseEntity<BlogModel>(blog, HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value = "/deleteblog/{blogid}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<BlogModel> deleteblog(@PathVariable("blogid") int blogid) {
+		//logger.info("inside view one blog method in blog controller");
+		System.out.println("the blog id is " + blogid);
+
+		BlogModel blog = blogservices.getBlog(blogid);
+		if (blog == null) {
+			System.out.println("blog with  id " + blogid + " does not exist");
+			return new ResponseEntity<BlogModel>(blog, HttpStatus.NOT_FOUND);
+		} else {
+			System.out.println("the user is" + blog.toString());
+			return new ResponseEntity<BlogModel>(blog, HttpStatus.OK);
+		}
+	}
+
+	@RequestMapping(value = "/bloggetall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ArrayList<BlogModel>> viewAllBlogs() {
+		//logger.info("inside view all blogs method in blog controller");
+		System.out.println("inside view all blogs method");
+		ArrayList<BlogModel> blogs = (ArrayList<BlogModel>) blogservices.getAllBlogs();
+		// System.out.println(forums);
+		if (blogs.isEmpty()) {
+			return new ResponseEntity<ArrayList<BlogModel>>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<ArrayList<BlogModel>>((ArrayList<BlogModel>) blogs, HttpStatus.OK);
+		}
+	}
+
+	@RequestMapping(value = "/bloggetall/{userid:.+}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ArrayList<BlogModel>> viewAllBlogsofuser(@PathVariable("userid") String userid) {
+		
+		//logger.info("inside view all blogs of user method in blog controller");
+		System.out.println("inside view all blogs of user method");
+		String useremail = userid.substring(1, userid.length() - 1);
+		System.out.println("from controller " + useremail);
+		ArrayList<BlogModel> blogs = (ArrayList<BlogModel>) blogservices.getAllBlogs(useremail);
+		// System.out.println(forums);
+		if (blogs.isEmpty()) {
+			return new ResponseEntity<ArrayList<BlogModel>>(HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<ArrayList<BlogModel>>((ArrayList<BlogModel>) blogs, HttpStatus.OK);
+		}
+	}
+}

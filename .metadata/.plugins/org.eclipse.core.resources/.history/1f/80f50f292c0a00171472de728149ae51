@@ -1,0 +1,128 @@
+/*console.log("inside blog controller js");*/
+app.controller('blogcontrol',
+				['$scope',
+						'blogservice',
+						'$location',
+						'$window',
+						'bid',
+						function($scope, blogservice, $location, $window,bid) {
+							console.log("inside blog controller js method");
+
+							var self = this;
+							var id;
+							self.id = {};
+							
+							self.blog = {
+								userId : "",
+								postedDate : null,
+								blogid : null,
+								postedUser : "",
+								blogTitle : "",
+								blogDescription : ""
+							};
+							
+							self.singleblog = {
+									userId : "",
+									postedDate : null,
+									blogid : null,
+									postedUser : "",
+									blogTitle : "",
+									blogDescription : ""
+								};
+
+							self.blogs = [];
+							self.submitblog = submitblog;
+							self.reset = reset;
+							self.displayblog = displayblog;
+							/*
+							 * self.blog = { userId: "indu795@gmail.com",
+							 * postedDate: null, blogid: 1, postedUser: "Indu",
+							 * blogTitle: "Discovery", blogDescription:
+							 * "Discovery is seeing what everyone else has seen
+							 * and thinking what no one has thought." }
+							 */
+							fetchAllBlogs();
+							
+							function fetchAllBlogs() {
+								blogservice
+										.fetchAllBlogs()
+										.then(
+												function(d) {
+													console.log("inside fetch all blogs in blog controller");
+													// console.log('in
+													// controller json
+													// array'+JSON.stringify(users1));
+													self.blogs = d;
+													console.log('self blogs'
+																	+ JSON.stringify(self.blogs));
+													// console.log("in
+													// controller json array
+													// "+JSON.stringify($scope.users1))
+												},
+												function(errResponse) {
+													console.error('Error while fetching blog');
+												});
+							}
+							
+							function createBlog(blog) {
+								console.log('in blog controller blog title: '
+										+ blog.blogTitle);
+								console.log('in controller blog posted date: '
+										+ blog.postedDate);
+								console.log('in controller blog id : '
+										+ blog.blogid);
+								console.log('in controller postedUser : '
+										+ blog.postedUser);
+								console.log('in controller blogTitle : '
+										+ blog.blogDescription);
+
+								blogservice
+										.createBlog(blog)
+										.then(
+												function(response) {
+													/*$window.alert("Blog created successfully");*/
+												},
+												function(errResponse) {
+													/*$window.alert("error in creating blog");*/
+												});
+							}
+
+							function submitblog() {
+								console.log('inside submit function on blog controller');
+								createBlog(self.blog);
+							}
+							
+							function displayblog(id) 
+							{
+								console.log('inside display blog method');
+								console.log('id to be viewd'+id);
+								bid.id=id;
+								console.log(self.blogs.length);
+								for (var i = 0; i < self.blogs.length; i++)
+								{
+									if (self.blogs[i].blogid == id)
+									{
+										self.singleblog = angular.copy(self.blogs[i]);
+										break;
+									}
+								}
+								console.log(self.singleblog);
+								$window.alert("redirecting to singleblog");
+								var url = "http://localhost:8080/FriendZoneFrontEnd/#/viewoneblog";
+								$window.location.href = url;
+								
+								console.log('inside display blog method');
+								fetchOneBlog(id);
+							}
+							function reset() {
+								self.blog = {
+									userId : "",
+									postedDate : null,
+									blogid : null,
+									postedUser : "",
+									blogTitle : "",
+									blogDescription : ""
+								};
+							}
+
+						} ]);

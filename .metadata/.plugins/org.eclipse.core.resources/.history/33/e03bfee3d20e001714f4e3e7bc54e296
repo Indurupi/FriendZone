@@ -1,0 +1,188 @@
+/*console.log("inside blog controller js");*/
+app.controller('blogcontrol',
+				['$scope','$rootScope',
+						'blogservice',
+						'$location',
+						'$window',
+						'bid',
+						function($scope,$rootScope, blogservice, $location, $window,bid) {
+							console.log("inside blog controller js method");
+							
+							var self = this;
+							var currentuser =$rootScope.currentUser.username;
+							console.log('current user is  '+ currentuser)
+							
+							self.blog = {
+								userId : "",
+								postedDate : null,
+								blogid : null,
+								postedUser : '',
+								blogTitle : "",
+								blogDescription : ""
+							};
+							
+							self.singleblog = {
+									userId : "",
+									postedDate : null,
+									blogid : null,
+									postedUser : "",
+									blogTitle : "",
+									blogDescription : ""
+								};
+							
+							self.comment = {
+								    blogId: null,
+								    commentId: null,
+								    postedUser: "",
+								    postedDate: null,
+								    commentDescription: ""
+								  };
+
+							self.blogs = [];
+							self.comments =[];
+							self.submitblog = submitblog;
+							self.reset = reset;
+							self.displayoneblog = displayoneblog;
+							self.submitcomment = submitcomment;
+						
+							fetchAllBlogs();
+							
+							
+							function fetchoneblog()
+							{
+								//console.log('self blogs'+ JSON.stringify(self.blogs));
+								//console.log('length:'+self.blogs.length);
+								var id=bid.id;
+								console.log("inside fetch one blog method");
+								for (var i = 0; i < self.blogs.length; i++)
+								{
+									//$window.alert("my check id:"+self.blogs[i].blogid);
+									if (self.blogs[i].blogid == id)
+									{
+										//$window.alert(self.blogs[i].blogTitle);
+										self.singleblog = angular.copy(self.blogs[i]);
+										break;
+									}
+								}
+								console.log('fetch comments of blog with id'+bid.id);
+								fetchcommentsofblog(bid.id);
+								//console.log('single blog'+JSON.stringify(self.singleblog));
+								
+							}
+							function fetchAllBlogs() {
+								blogservice
+										.fetchAllBlogs()
+										.then(
+												function(d) {
+													console.log("inside fetch all blogs in blog controller");
+													
+													self.blogs = d;
+													console.log("ready to fetch one blog");
+													fetchoneblog(); 
+													
+												},
+												function(errResponse) {
+													console.error('Error while fetching blog');
+													$window.alert('Error while fetching blogs');
+												});
+							}
+							
+							function fetchcommentsofblog()
+							{
+								console.log('inside fetch comments of blog method');
+								blogservice
+								.fetchcommentsofblog(bid.id)
+								.then(
+										function(d) {
+											console.log("inside fetch all blogs in blog controller");
+											
+											self.comments = d;
+											
+										},
+										function(errResponse) {
+											console.error('Error while fetching comments');
+											//$window.alert('Error while fetching comments');
+										});
+							}
+							
+							function createBlog(blog) {
+								/*console.log('in blog controller blog title: '
+										+ blog.blogTitle);
+								console.log('in controller blog id : '
+										+ blog.blogid);*/
+
+								blogservice
+										.createBlog(blog)
+										.then(
+												function(response) {
+													reset();
+													$window.alert("Blog created successfully");
+												},
+												function(errResponse) {
+													$window.alert("Error in creating blog");
+												});
+							}
+							
+							function createComment(comment)
+							{
+								console.log('inside create comment function');
+								/*console.log('in blog controller  blogId: '+comment.blogId);
+								console.log('in blog controller  postedUser : '+comment.postedUser);
+								console.log('in blog controller  postedDate: '+comment.postedDate);
+								console.log('in blog controller commentDescription: '+comment.commentDescription);
+								console.log('in blog controller comment id: '+comment.commentId);*/
+								
+								blogservice.createComment(comment)
+								.then(function(response) {
+									$window.alert("commented successfully");
+									fetchcommentsofblog(bid.id);
+									commentreset();
+								},
+								function(errResponse) {
+									$window.alert("error in creating comment");
+								});
+							}
+
+							function submitblog() {
+								console.log('inside submit function on blog controller');
+								createBlog(self.blog);
+							}
+							
+							function submitcomment(blogid)
+							{
+								console.log('the blog id is'+blogid);
+								self.comment.blogId =  blogid;
+								console.log('inside submit comment function');
+								createComment(self.comment);
+							}
+							
+							function displayoneblog(id) 
+							{
+								bid.id=id;
+								var url = "http://localhost:8080/FriendZoneFrontEnd/#/viewoneblog";
+								$window.location.href = url;
+							}
+							function reset() {
+								self.blog = {
+									userId : "",
+									postedDate : null,
+									blogid : null,
+									postedUser : "",
+									blogTitle : "",
+									blogDescription : ""
+								};
+							}
+							
+							function commentreset()
+							{
+								self.comment=
+								{
+										    blogId: bid,
+										    commentId: null,
+										    postedUser: "",
+										    postedDate: null,
+										    commentDescription: ""
+										
+								};
+							}
+						} ]);

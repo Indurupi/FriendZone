@@ -1,0 +1,12 @@
+package com.friendzone.Model;
+
+import javax.persistence.Entity;
+
+@Entity
+public class JobModel {
+	
+	int Jobid;
+	
+	
+
+}

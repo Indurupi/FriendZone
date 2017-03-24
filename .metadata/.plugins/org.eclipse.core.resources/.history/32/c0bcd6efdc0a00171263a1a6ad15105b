@@ -1,0 +1,8 @@
+package com.friendzone.DaoServices;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public interface JobServices {
+
+}

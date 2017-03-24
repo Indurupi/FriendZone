@@ -1,0 +1,5 @@
+package com.friendzone.Configurations;
+
+public class WebSocketConfig {
+
+}

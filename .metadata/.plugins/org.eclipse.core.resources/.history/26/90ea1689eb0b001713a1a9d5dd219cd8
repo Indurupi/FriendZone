@@ -1,0 +1,94 @@
+
+angular
+		.module('friendzoneApp')
+		.controller(
+				'homecontrol',
+				[
+						'$scope',
+						'homeservice',
+						'$location',
+						'$window',
+						function($scope, homeservice, $location, $window)
+
+						{
+							console.log("inside homecontroller js");
+
+							var self = this;
+							self.user1 = {
+								username : '',
+								emailid : '',
+								password : '',
+								phno : null,
+								status : 'OFFLINE'
+							};
+
+							self.users1 = [];
+							self.submit = submit;
+							self.reset = reset;
+
+							fetchAllUsers();
+
+							function fetchAllUsers() {
+								homeservice
+										.fetchAllUsers()
+										.then(
+												function(d) {
+													console.log("inside fetch all users in home control");
+													// console.log('in
+													// controller json
+													// array'+JSON.stringify(users1));
+													self.users1 = d;
+													//console.log('selfusers '+JSON.stringify(self.users1));
+													// console.log("in
+													// controller json array
+													// "+JSON.stringify($scope.users1))
+												},
+												function(errResponse) {
+													console.error('Error while fetching users1');
+													$window.alert('Error while fetching users');
+												});
+							}
+
+							function createUser(user1) {
+								console.log('in controller Username: '
+										+ user1.username);
+								console.log('in controller Email : '
+										+ user1.emailid);
+								console.log('in controller Password : '
+										+ user1.password);
+								console.log('in controller Phone : '
+										+ user1.phno);
+								console.log('n controller status : '
+										+ user1.status);
+
+								console.log('in controller json array'
+										+ JSON.stringify(user1, null, 2));
+
+								homeservice
+										.createUser(user1)
+										.then(
+												function(response) {
+													$window
+															.alert("Login now to begin");
+												},
+												function(errResponse) {
+													$window
+															.alert("error in creating user");
+												});
+							}
+
+							function submit() {
+								createUser(self.user1);
+							}
+
+							function reset() {
+								self.user1 = {
+									id : null,
+									username : '',
+									address : '',
+									email : '',
+									phone : null,
+									status : 'OFFLINE'
+								};
+							}
+						} ]);

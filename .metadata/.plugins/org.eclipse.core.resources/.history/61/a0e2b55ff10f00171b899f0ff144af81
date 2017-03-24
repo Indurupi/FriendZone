@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>FriendZone</title>
+<style type="text/css">
+#holder {
+	display: inline-block;
+	border-radius: 5px;
+	background: linear-gradient(to bottom, #b2dfdb 60%, #00796b 130%);
+	box-shadow: 0px 0px 20px #b2dfdb;
+	margin: 25px 300px;
+	justify-content: center;
+	width: 60%;
+	padding: 20px;
+}
+
+#holder:HOVER {
+	cursor: pointer;
+	box-shadow: 10px 10px 20px #b2dfdb;
+	background: linear-gradient(to bottom, #80CBC4 50%,#b2dfdb 130%);
+}
+
+.form-control:focus {
+	border: 2px solid #009688;
+}
+</style>
+</head>
+<body ng-app="friendzoneApp">
+	<div ng-controller="blogcontrol as blogc">
+	<h1 class="lead" id="companyname" style="color: #009688;text-align: center;">Blogs</h1>
+		<div id="holder" ng-repeat="blogobject in blogc.blogs">
+			<div>
+			
+				<!-- Blog Post Content Column -->
+
+				<div class="col-lg-8" id="blogblock">
+
+					<!-- Blog Post -->
+
+					<!-- Title -->
+					<h1>{{blogobject.blogTitle}}</h1>
+
+					<!-- Author -->
+					<p class="lead">by {{blogobject.postedUser}}</p>
+
+					<hr>
+
+					<!-- Date/Time -->
+					<p>
+						<p class="glyphicon glyphicon-time"></p> Posted on
+						{{blogobject.postedDate}}
+					</p>
+
+					<hr>
+
+					<!-- Preview Image -->
+					<!--  <img class="img-responsive" src="http://placehold.it/900x300" alt=""> -->
+
+					<!-- Post Content -->
+					<p>{{blogobject.blogDescription}}e</p>
+
+					<hr>
+					<button class="btn" id="custom-button" style="width:40%;margin-left:0px" ng-click="blogc.deleteblog(blogobj.blogid)">Delete Blog</button>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</body>
+</html>

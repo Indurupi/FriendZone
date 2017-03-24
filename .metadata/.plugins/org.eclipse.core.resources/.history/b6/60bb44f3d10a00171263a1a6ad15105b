@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<style type="text/css">
+body:not(#holder)
+{
+background-color: #ffffff;
+}
+#holder {
+	display: inline-block;	
+	border-radius: 5px;
+	background: linear-gradient(to bottom, #b2dfdb 60%, #00796b 130%);
+	
+	box-shadow: 0px 0px 20px #b2dfdb;
+	margin: 10px 25px;
+	justify-content: center;
+	width: 95%;
+	padding: 20px;
+
+}
+
+
+#custom-button {
+	
+	color: #ffffff;
+	width: 20%;
+	background-color: #009688;
+	font-family: Verdana, san-serif;
+	font-weight: bold;
+	font-style: italic;
+}
+
+#top-block {
+	padding-top: 4px;
+}
+
+.form-control:focus
+{
+	border: 2px solid #009688;
+}
+
+</style>
+</head>
+<body ng-app="friendzoneApp">
+			<div id="holder" ng-controller="forumcontroller as forumc">
+				           <!-- forum Post Content Column -->
+            <div class="col-lg-8" id="blogblock">
+
+                <!-- Forum Post -->
+
+                <!-- Title -->
+                <h1>{{forumc.oneforum.forumTitle}}</h1>
+
+                <!-- Author -->
+                <p class="lead">
+                    by <a href="#">{{forumc.oneforum.forumTitle}}</a>
+                </p>
+
+                <hr>
+
+                <!-- Date/Time -->
+                <p><span class="glyphicon glyphicon-time"></span> Posted on : {{forumc.oneforum.forumTitle}}</p>
+
+                <hr>
+
+                <!-- Preview Image -->
+               <!--  <img class="img-responsive" src="http://placehold.it/900x300" alt=""> -->
+
+                <hr>
+
+                <!-- Post Content -->
+                {{forumc.oneforum.forumTitle}}
+                <hr>
+
+
+
+            </div>
+				
+			</div>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+package com.friendzone.DaoServices;
+
+import java.util.ArrayList;
+
+import org.springframework.stereotype.Service;
+
+import com.friendzone.Model.JobModel;
+
+@Service
+public interface JobServices {
+	
+	public boolean createJob(JobModel jobModel);
+	public boolean appliedJob(JobModel jobModel);
+	public boolean updateJob(JobModel jobModel);
+	public boolean fetchOneJob(long Jobid);
+	public ArrayList<JobModel> viewAllJobs();
+	
+	
+}

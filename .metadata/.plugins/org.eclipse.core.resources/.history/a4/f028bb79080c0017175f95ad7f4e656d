@@ -1,0 +1,81 @@
+package com.friendzone.DaoImpl;
+
+import java.util.ArrayList;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.friendzone.DaoServices.Forumservices;
+import com.friendzone.Model.ForumModel;
+
+@Repository
+@Transactional
+public class ForumDaoImpl implements Forumservices{
+
+	@Autowired
+	SessionFactory sessionFactory;
+	
+	@Override
+	public boolean insertForum(ForumModel forum) {
+		try {
+			Session s = sessionFactory.openSession();
+			Transaction t= s.getTransaction();
+			t.begin();
+			s.save(forum);
+			t.commit();
+			//logger.debug("end of insertforum method in ForumDaoImpl");
+			return true;
+		} catch (HibernateException e) {
+			
+			e.printStackTrace();
+			//logger.debug("end of insertforum method in ForumDaoImpl");
+			return false;
+		}
+	}
+
+	@Override
+	public boolean updateForum(ForumModel forum) {
+		try {
+			Session s = sessionFactory.openSession();
+			Transaction t= s.getTransaction();
+			t.begin();
+			s.update(forum);
+			t.commit();
+			//logger.debug("end of updateForum method in ForumDaoImpl");
+			return true;
+		} catch (HibernateException e) {
+			
+			e.printStackTrace();
+			//logger.debug("end of updateForum method in ForumDaoImpl");
+			return false;
+		}
+	}
+
+	@Override
+	public ArrayList<ForumModel> viewForums() {
+		Session s = sessionFactory.openSession();
+		Transaction t = s.getTransaction();
+		t.begin();
+		ArrayList<ForumModel> forumlist = (ArrayList<ForumModel>) s.createQuery("from ForumModel").list();
+		t.commit();
+		s.close();
+		return forumlist;
+	}
+
+	@Override
+	public ForumModel viewOneForum(int Forumid) {
+		Session s = sessionFactory.openSession();
+		Transaction t = s.getTransaction();
+		t.begin();
+		ForumModel forum = s.get(ForumModel.class, Forumid);
+		t.commit();
+		s.close();
+		return forum;
+	}
+	
+}

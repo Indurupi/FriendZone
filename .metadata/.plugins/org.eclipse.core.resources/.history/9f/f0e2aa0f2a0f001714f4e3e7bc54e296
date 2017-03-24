@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>FriendZone</title>
+<style type="text/css">
+#holder {
+	display: inline-block;
+	border-radius: 5px;
+	background: linear-gradient(to bottom, #b2dfdb 60%, #00796b 130%);
+	box-shadow: 0px 0px 20px #b2dfdb;
+	margin: 25px 300px;
+	justify-content: center;
+	width: 60%;
+	padding: 20px;
+}
+
+#holder:HOVER {
+	cursor: pointer;
+	box-shadow: 10px 10px 20px #b2dfdb;
+	background: linear-gradient(to bottom, #80CBC4 50%,#b2dfdb 130%);
+}
+
+.form-control:focus {
+	border: 2px solid #009688;
+}
+</style>
+</head>
+<body ng-app="friendzoneApp">
+	<div ng-controller="jobcontroller as jobc">
+		<div id="holder" ng-repeat="jobobject in jobc.jobs">
+			<!-- ng-click="jobc.submitjobapplication(jobobject.jobid)" -->
+			<div>
+			<h1 class="lead">Jobs</h1>
+				<div class="col-lg-8" id="blogblock">
+
+					<h1>{{jobobject.jobtitle}}</h1>
+					<hr>
+
+					<!-- Date/Time -->
+					<p>
+						<p class="glyphicon glyphicon-time"></p> Posted on
+						{{jobobject.datetime}}
+					</p>
+
+					<hr>
+					<p>Company Name : {{jobobject.companyname}}</p>
+					<p>Salary Package : {{jobobject.salarypackage}}</p>
+					<p>Qualification : {{jobobject.qualification}}</p>
+					<p>Job Description : {{jobobject.jobdescription}}</p>
+					<button class="btn" id="custom-button" style="width:40%;margin-left:0px" ng-click="jobc.submitjobapplication(jobobject.jobid)">Apply Job</button>
+
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+package com.friendzone.DaoServices;
+
+import javax.persistence.Entity;
+
+import org.springframework.stereotype.Service;
+
+import com.friendzone.Model.JobModel;
+
+@Service
+public interface JobServices {
+	
+	public boolean createJob(JobModel jobModel);
+	public boolean appliedJob(JobModel jobModel);
+	
+}

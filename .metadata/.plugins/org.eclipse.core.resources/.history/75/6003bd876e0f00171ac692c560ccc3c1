@@ -1,0 +1,49 @@
+package com.friendzone.Controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.friendzone.DaoServices.FriendServices;
+import com.friendzone.Model.Friend;
+import com.friendzone.Model.UserRegModel;
+
+@RestController
+public class FriendController {
+	@Autowired
+	FriendServices friendServices;
+	
+	//private static final Logger log=LoggerFactory.getLogger(Friend.class);
+	
+	@RequestMapping(value = "/getmyfriends/{emailid:.+}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Friend>> listAllFriends(@PathVariable("emailid") String emailid){
+		//log.debug("-->Calling method listAllFriends");
+		String useremail = emailid.substring(1, emailid.length() - 1);
+		System.out.println("in friend controller"+useremail);
+		
+		List<Friend> myfriends = friendServices.getmyfriends(useremail);
+		return new ResponseEntity<List<Friend>> (myfriends,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/addFriend", method=RequestMethod.POST)
+	public ResponseEntity<String> sendFriendRequest(@RequestBody Friend newfriendrequest)
+	{
+		//log.debug("-->Calling method send friend request");	
+		if (friendServices.save(newfriendrequest)) {
+			return new ResponseEntity<String>(HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
+		}	
+	}
+	
+	
+	
+}
